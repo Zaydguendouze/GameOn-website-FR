@@ -26,8 +26,6 @@ const nameRegex = /^[a-zA-Z-\s]+$/;
 const emailRegex = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
 const birthdateRegex = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
 
-// error
-const isError = false;
 
 // submit
 const form = document.getElementById("form");
