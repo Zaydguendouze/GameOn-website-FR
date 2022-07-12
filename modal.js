@@ -15,6 +15,8 @@ const closeBtn = document.querySelector(".close");
 const closeMsg = document.querySelector(".message");
 const submitBtn = document.querySelector(".btn-submit");
 
+
+const form = document.getElementById("form");
 const firstName = document.getElementById("firstName");
 const lastName = document.getElementById("lastName");
 const email = document.getElementById("email");
@@ -27,8 +29,6 @@ const emailRegex = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
 const birthdateRegex = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
 
 
-// submit
-const form = document.getElementById("form");
 
 // messages
 const messagesErrors = {
@@ -50,11 +50,11 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // close modal event (désactive le display)
 closeBtn.addEventListener("click", closeModal);
 
-// remove() retire l'élément du DOM (bground)
+// "none" pour annuler le "block" au lancement de la modale
+// reset() remet à zéro le formulaire
 function closeModal() {
   modalbg.style.display = "none";
   form.reset();
-  submitBtn.setAttribute("value", "C'est parti");
 }
 
 // launch modal form
@@ -64,11 +64,13 @@ function launchModal() {
 
 
 // confirmation
+// désactive le formulaire de base et bloque celui du message de confirmation
 function confirmation() {
   document.querySelector(".modal-body").style.display = "none";
   document.querySelector(".confirmation").style.display = "block";
 }
 
+// formData[] pour ne pas les lister directement dans le HTML
 // lastName
 formData[0].addEventListener("input", lastNameValid);
 function lastNameValid() {
@@ -173,6 +175,7 @@ function tournamentsValid() {
 formData[5].addEventListener("input", locationValid);
 function locationValid() {
   if (!form.location.value) {
+
     let locationError = document.getElementById("location-message");
     locationError.innerHTML = messagesErrors.locationMsg;
     
@@ -189,6 +192,7 @@ function locationValid() {
 formData[6].addEventListener("input", checkboxValid);
 function checkboxValid() {
   if (!form.checkbox1.checked) {
+
     let checkboxError = document.getElementById("checkbox-message");
     checkboxError.innerHTML = messagesErrors.checkboxMsg;
     
@@ -202,21 +206,25 @@ function checkboxValid() {
 }
 
 // validate
+// au clique du bouton, lancer la function validate()
+// preventdefault() pour bloquer le comportement du clique par défaut et rester 
+// sur le formulaire
 submitBtn.addEventListener("click", validate);
 
 function validate(e) {
   e.preventDefault();
   if (
-    firstNameValid() &&
-    lastNameValid() &&
-    emailValid() &&
-    birthdateValid() &&
-    tournamentsValid() &&
-    locationValid() &&
-    checkboxValid()
+    firstNameValid() == true &&
+    lastNameValid() == true &&
+    emailValid() == true &&
+    birthdateValid() == true &&
+    tournamentsValid() == true &&
+    locationValid() == true &&
+    checkboxValid() == true
   ) {
     confirmation();
   }
+  // sinon return false et affiche les messages d'erreurs
   else {
     firstNameValid(),
       lastNameValid(),
