@@ -11,7 +11,7 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-const closeBtn = document.querySelector(".close");
+const closeBtn = document.querySelectorAll(".close");
 const closeMsg = document.querySelector(".message");
 const submitBtn = document.querySelector(".btn-submit");
 
@@ -48,7 +48,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 
 // close modal event (désactive le display)
-closeBtn.addEventListener("click", closeModal);
+closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 
 // "none" pour annuler le "block" au lancement de la modale
 // reset() remet à zéro le formulaire
